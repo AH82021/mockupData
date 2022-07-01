@@ -1,30 +1,116 @@
 What are the Top 25 schools (.edu domains)?
 
  A- SELECT DISTINCT email_domain
+ Ans- We need limit result to 25 and avoid form duplicate values and return domain only ends with '.edu'.
+ DISTINCT is used to return unique values in the output. It filters out all duplicate values in the specified column(s).
+ % is a wildcard character that matches zero or more missing letters in the pattern. 
+ LIMIT is a clause that lets you specify the maximum number of rows the result set will have. 
  
+SELECT DISTINCT email_domain
 FROM users
 WHERE email_domain LIKE '%.edu'
 LIMIT 25;
 
+results : email_domain
+my.tccd.edu
+uark.edu
+g.clemson.edu
+njit.edu
+tkc.edu
+laverne.edu
+newschool.edu
+student.cccd.edu
+nau.edu
+illinois.edu
+umass.edu
+nsuok.edu
+cougars.csusm.edu
+ucsd.edu
+unomaha.edu
+wells.edu
+virginia.edu
+somaiya.edu
+auburn.edu
+tamu.edu
+mail.umw.edu
+utexas.edu
+brandeis.edu
+students.fscj.edu
+mail.lakelandcc.edu
+
 B-How many .edu learners are located in New York?
+Ans: We need to find the sum of users rows that domin end with(.edu) and city is New York both condtion should be ture;
+COUNT(): count the number of rows
+AND combines the two conditions,and both conditions must be true for the row to be included in the result.
 
 SELECT COUNT(user_id)
 FROM users
 WHERE email_domain LIKE '%.edu' AND city = 'New York';
 
-C-The mobile_app column contains either mobile-user or NULL. How many of these Codecademy learners are using the mobile app?
+results : 
+50
 
+
+
+
+
+C-The mobile_app column contains either mobile-user or NULL. How many of these Codecademy learners are using the mobile app?
+ Ans: we need to return sum of row only with mobile_app column is equal to mobile-user
+ COUNT(): count the number of rows
+ WHERE is a clause that indicates which row(s) to count specified column value.
+ 
+ 
 SELECT COUNT(user_id)
 FROM users
 WHERE mobile_app = 'mobile-user';
 
+result: 330
+
+
 D-  using strftime() function, query for the sign up counts for each hour.
+
+Ans:  we need to use  strftime(format, column) and pass both aruguments.and goup the results in two identical data columns 
+GROUP BY is a clause in SQL that is used with aggregate functions.
+It is used in collaboration with the SELECT statement to arrange identical data into groups.
 
 SELECT COUNT(sign_up_at),
   strftime('%H', sign_up_at) AS 'Hour'
 FROM users
 GROUP BY 2;
+
+Results : 
+100	00
+93	01
+73	02
+84	03
+74	04
+29	05
+30	06
+16	07
+18	08
+9	09
+10	10
+13	11
+27	12
+80	13
+101	14
+103	15
+183	16
+174	17
+185	18
+147	19
+138	20
+104	21
+105	22
+104	23
+
 E-Do different schools (.edu domains) prefer different courses?
+ANS:
+
+A CASE statement allows us to create different outputs (usually in the SELECT statement).
+It is SQL’s way of handling if-then logic
+
+
 
 SELECT users.email_domain,
   COUNT(
@@ -52,7 +138,634 @@ JOIN progress
   ON users.user_id = progress.user_id
   GROUP BY 1;
   
+  Result : 
+  email_domain	c_plus_plus	sql	html	javascript	java
+aa.edu	1	1	1	1	0
+aauni.edu	1	0	0	0	0
+acu.edu	2	1	0	1	0
+africau.edu	1	1	1	1	0
+aggies.ncat.edu	2	3	2	3	0
+aii.edu	0	0	1	1	0
+alaska.edu	2	2	2	1	1
+albany.edu	1	2	0	2	1
+albertus.edu	1	1	0	1	0
+alcorn.edu	0	0	1	1	0
+allegheny.edu	0	0	0	0	0
+alliant.edu	1	0	0	1	0
+alumni.baylor.edu	0	0	0	1	0
+alumni.cmu.edu	0	0	0	1	0
+alumni.mib.edu	1	1	1	1	0
+alumni.mondragon.edu	0	0	0	1	0
+alumni.scu.edu	0	1	0	1	0
+alumni.stanford.edu	0	1	0	0	0
+alumno.utesa.edu	1	2	1	2	0
+andrew.cmu.edu	1	0	0	3	1
+anselm.edu	0	0	0	1	0
+appstate.edu	0	0	0	1	0
+aps.edu	3	3	2	2	1
+artic.edu	1	0	1	0	1
+asu.edu	7	6	7	7	6
+atlanta.creativecircus.edu	1	0	0	1	0
+atu.edu	0	0	0	0	0
+auburn.edu	2	4	3	5	1
+augsburg.edu	0	0	0	0	0
+augustana.edu	0	1	0	0	0
+babson.edu	2	2	2	2	0
+baker.edu	1	1	1	1	1
+baruchmail.cuny.edu	1	0	2	1	1
+bates.edu	1	1	1	1	0
+baylor.edu	5	13	5	8	2
+bc.edu	2	3	1	3	0
+beloit.edu	0	0	0	1	0
+bentley.edu	1	1	0	1	0
+berea.edu	0	1	0	0	1
+berkeley.edu	7	10	8	10	5
+bethelu.edu	1	1	1	1	1
+bgsu.edu	1	1	1	1	0
+binghamton.edu	3	4	1	4	0
+bio.fsu.edu	0	1	0	1	0
+biola.edu	0	2	2	2	2
+bison.howard.edu	1	3	1	1	0
+bluffton.edu	1	0	1	1	1
+brandeis.edu	2	1	2	2	1
+bridgeport.edu	0	1	0	1	0
+brockport.edu	1	2	1	1	0
+brown.edu	1	0	1	1	1
+bsu.edu	4	3	3	4	2
+bths.edu	0	0	0	1	0
+bu.edu	2	5	2	3	3
+buckeyemail.osu.edu	1	2	1	2	0
+bucknell.edu	0	1	0	0	0
+bucs.fsw.edu	1	0	0	0	0
+buffalo.edu	1	5	1	2	1
+bulldogs.aamu.edu	0	0	0	0	0
+butler.edu	0	1	0	0	0
+bxscience.edu	2	3	3	2	0
+byui.edu	3	2	2	3	1
+caldwell.edu	0	0	0	0	0
+calpoly.edu	1	3	1	2	2
+calstatela.edu	0	0	0	0	0
+capellauniversity.edu	0	1	0	0	0
+carthage.edu	0	1	1	0	0
+case.edu	3	9	2	6	0
+castleton.edu	0	0	0	0	0
+cca.edu	1	0	0	1	1
+cfbisd.edu	1	1	1	1	0
+chemeketa.edu	0	1	0	0	0
+chicagobooth.edu	0	0	1	1	0
+citadel.edu	1	1	1	0	1
+cnm.edu	0	0	0	1	0
+cocc.edu	0	0	2	2	0
+colgate.edu	1	0	0	1	1
+college.harvard.edu	1	2	0	1	1
+colorado.edu	9	5	6	8	5
+columbia.edu	5	3	3	5	2
+converse.edu	0	1	0	0	0
+cornell.edu	3	5	0	6	2
+cornellcollege.edu	0	1	0	0	0
+cougars.ccis.edu	0	0	1	1	0
+cougars.csusm.edu	2	1	2	0	1
+coyotes.usd.edu	1	1	1	1	0
+cpp.edu	1	0	0	0	0
+cps.edu	23	28	16	25	13
+creighton.edu	2	1	1	2	1
+crimson.ua.edu	1	1	2	2	2
+csbsju.edu	0	0	0	0	0
+csp.edu	1	1	1	1	1
+csu.fullerton.edu	0	1	0	2	0
+csumb.edu	1	1	0	2	0
+ctx.edu	1	0	0	1	0
+cuw.edu	1	1	1	0	0
+cwu.edu	3	6	2	3	0
+dbu.edu	1	0	1	1	1
+dcds.edu	1	1	0	1	0
+depauw.edu	1	1	1	1	1
+dominican.edu	0	1	0	0	0
+dons.usfca.edu	1	1	0	1	0
+drexel.edu	6	8	4	6	3
+duke.edu	0	1	0	1	0
+dukes.jmu.edu	0	1	0	1	0
+duq.edu	0	0	0	1	0
+dwight.edu	1	2	0	2	0
+eagles.cui.edu	0	0	0	0	0
+eagles.ewu.edu	1	0	1	1	1
+eagles.oc.edu	1	0	1	2	1
+eatonville.wednet.edu	1	1	0	1	0
+email.arizona.edu	4	3	2	3	2
+email.bakersfieldcollege.edu	0	1	0	0	1
+email.cpcc.edu	3	3	3	3	0
+email.neit.edu	0	1	1	1	0
+email.phoenix.edu	1	0	0	1	0
+email.sc.edu	1	0	0	3	1
+email.unc.edu	0	0	0	1	0
+email.vccs.edu	0	2	0	0	1
+email.wm.edu	0	0	0	1	0
+email.wofford.edu	1	1	1	1	0
+emerson.edu	1	0	1	0	1
+emich.edu	2	2	1	2	0
+emory.edu	2	1	2	0	1
+eng.ucsd.edu	4	3	3	4	2
+essec.edu	3	3	3	2	1
+estudiante.utesa.edu	1	0	0	1	0
+famu.edu	1	0	1	1	1
+fandm.edu	0	1	0	1	0
+fau.edu	1	1	0	0	0
+fer.edu	0	0	0	1	0
+fisk.edu	1	1	1	1	0
+fiu.edu	4	5	5	3	3
+fje.edu	0	0	0	1	0
+fordham.edu	2	2	3	3	3
+friars.providence.edu	1	0	0	1	1
+g.austincc.edu	0	2	0	0	0
+g.clemson.edu	2	6	2	0	3
+g.cofc.edu	1	2	0	1	0
+g.rit.edu	2	1	2	2	1
+g.ucla.edu	6	6	7	7	2
+g.uky.edu	1	1	0	1	0
+galileo.edu	1	1	1	1	0
+gatech.edu	1	1	1	2	0
+geffenacadmey.ucla.edu	1	0	1	0	1
+georgetown.edu	4	3	4	5	1
+georgiasouthern.edu	0	1	0	0	0
+gettysburg.edu	0	0	0	0	0
+gm.slc.edu	0	1	0	0	1
+go.kilgore.edu	1	1	0	1	0
+go.olemiss.edu	0	2	0	0	1
+go.stockton.edu	1	2	1	0	1
+gradcenter.cuny.edu	0	1	0	0	0
+grinnell.edu	1	0	1	0	1
+gus.pittstate.edu	0	1	1	0	0
+gwu.edu	0	1	0	0	0
+hamline.edu	0	0	0	0	0
+hampshire.edu	0	1	0	0	1
+harding.edu	0	0	0	1	0
+hargrave.edu	1	1	0	1	0
+hastings.edu	0	0	0	0	0
+hawaii.edu	1	1	1	1	1
+hawk.iit.edu	2	3	2	5	1
+hawkmail.newpaltz.edu	0	1	0	0	0
+hec.edu	1	2	1	2	1
+hindscc.edu	0	0	1	1	0
+hm.edu	1	0	1	0	1
+hms.harvard.edu	0	0	0	0	0
+humboldt.edu	2	2	0	3	1
+humnet.ucla.edu	1	1	0	1	0
+husky.neu.edu	8	6	7	11	8
+husson.edu	0	1	0	0	1
+iastate.edu	3	3	2	1	1
+iit.edu	0	1	0	0	0
+illinois.edu	5	4	4	8	2
+indiana.edu	1	2	1	1	0
+inside.artcenter.edu	0	2	0	0	2
+islander.tamucc.edu	0	1	0	0	0
+isu.edu	0	0	0	0	0
+iu.edu	3	3	3	5	3
+iupui.edu	1	1	1	1	0
+iut-dhaka.edu	0	0	0	1	0
+ivytech.edu	0	2	1	0	0
+iwcc.edu	0	1	1	1	1
+jbu.edu	1	0	1	1	1
+jcu.edu	0	0	1	1	0
+jhu.edu	1	2	0	1	0
+jhuapl.edu	0	0	0	0	0
+jjay.cuny.edu	0	0	0	0	0
+juniata.edu	0	1	1	0	0
+kean.edu	1	0	1	1	1
+kent.edu	3	5	1	3	1
+kenyon.edu	1	1	1	1	0
+kiet.edu	0	0	0	1	0
+kmsd.edu	0	1	0	0	0
+knights.ucf.edu	2	3	2	3	2
+knox.edu	0	0	0	0	0
+ksu.edu	0	1	0	0	0
+ku.edu	22	25	12	25	8
+latech.edu	0	0	0	0	0
+laverne.edu	1	1	1	1	0
+law.barry.edu	1	1	1	1	0
+law.gwu.edu	1	1	0	1	0
+liberty.edu	1	0	0	2	1
+lion.lmu.edu	0	1	0	0	0
+live.marshall.edu	0	1	0	0	0
+live.missouristate.edu	3	5	2	2	0
+live.spcollege.edu	0	0	0	0	0
+live.unc.edu	0	3	0	2	0
+live.ytech.edu	1	0	1	0	1
+louisiana.edu	0	1	0	1	0
+loyola.edu	0	1	1	1	1
+mail.aub.edu	0	0	0	1	0
+mail.buffalostate.edu	0	0	0	0	0
+mail.ccsf.edu	0	0	0	0	0
+mail.chapman.edu	0	0	0	1	0
+mail.citytech.cuny.edu	1	2	1	2	1
+mail.davistech.edu	0	0	0	0	0
+mail.fresnostate.edu	0	1	0	0	0
+mail.greenriver.edu	1	2	1	4	2
+mail.harpercollege.edu	0	1	0	0	0
+mail.lakelandcc.edu	0	1	0	0	1
+mail.missouri.edu	1	1	0	1	0
+mail.nmc.edu	2	1	2	1	1
+mail.northcentral.edu	0	0	0	1	0
+mail.pima.edu	0	1	0	0	0
+mail.sfsu.edu	2	0	0	2	2
+mail.smu.edu	0	1	1	0	0
+mail.stmarytx.edu	1	1	1	1	0
+mail.uc.edu	1	3	4	2	1
+mail.umkc.edu	1	1	1	1	0
+mail.umw.edu	0	0	0	0	0
+mail.usf.edu	3	5	6	4	1
+mail.wlc.edu	0	1	0	0	0
+mail.wlu.edu	0	1	0	0	0
+mail.wou.edu	0	0	0	0	0
+maine.edu	2	3	1	2	2
+manhattan.edu	1	0	1	0	1
+maricopa.edu	0	0	0	0	0
+marshall.edu	1	1	0	1	0
+massart.edu	1	0	1	0	1
+mavs.uta.edu	0	0	0	1	0
+mca.edu	1	1	1	1	1
+mccsc.edu	0	0	0	1	0
+memphis.edu	0	0	0	0	0
+merrimack.edu	1	1	0	1	0
+metrotech.edu	1	1	0	1	0
+mga.edu	1	3	1	1	0
+mgh.harvard.edu	1	1	1	1	0
+miad.edu	0	0	0	1	0
+miami.edu	0	1	0	0	0
+miamioh.edu	3	6	2	5	1
+middlebury.edu	1	1	1	1	1
+miners.utep.edu	1	0	0	0	0
+minerva.kgi.edu	1	1	1	1	1
+mines.sdsmt.edu	0	1	0	0	0
+missouri.edu	0	0	0	1	0
+mix.wvu.edu	4	3	4	4	1
+mmm.edu	0	1	0	0	0
+mnsu.edu	0	0	0	0	0
+mocs.utc.edu	1	0	0	0	0
+monmouth.edu	4	6	5	7	1
+montana.edu	1	0	0	1	0
+montclair.edu	0	0	0	1	0
+moravian.edu	0	1	0	0	0
+msstate.edu	3	3	2	2	1
+mst.edu	1	3	2	0	0
+msu.edu	7	16	10	16	5
+mtholyoke.edu	0	2	0	0	0
+mtmail.mtsu.edu	0	1	1	1	1
+mtu.edu	0	2	0	1	1
+muhs.edu	0	0	0	0	0
+mukilteo.wednet.edu	1	1	0	1	0
+murraystate.edu	0	0	0	0	0
+my.anokaramsey.edu	1	1	0	1	0
+my.apsu.edu	0	1	1	0	0
+my.bridgeport.edu	0	0	0	1	0
+my.ccsu.edu	1	0	1	0	1
+my.chattanoogastate.edu	0	0	0	1	0
+my.cleary.edu	1	0	1	0	1
+my.clevelandcc.edu	0	1	0	0	0
+my.csun.edu	0	2	0	2	1
+my.devry.edu	2	2	2	3	0
+my.erau.edu	1	1	1	1	0
+my.fisk.edu	1	1	1	1	0
+my.fit.edu	0	0	0	0	0
+my.fsu.edu	1	0	1	0	1
+my.gvltec.edu	0	0	0	0	0
+my.keller.edu	1	1	1	1	0
+my.lonestar.edu	1	0	0	1	0
+my.pmi.edu	1	0	0	1	1
+my.smccd.edu	4	3	3	4	1
+my.stlcc.edu	1	1	1	1	1
+my.tccd.edu	3	2	2	3	0
+my.tridenttech.edu	0	1	1	1	1
+my.unt.edu	0	1	0	0	0
+my.uri.edu	1	0	1	0	1
+my.utsa.edu	0	0	0	0	0
+my.waketech.edu	4	4	0	5	0
+my.westga.edu	0	0	0	0	0
+myhunter.cuny.edu	1	1	1	1	0
+mymail.champlain.edu	0	0	0	0	0
+mymail.eku.edu	1	1	0	1	0
+mymail.lccc.edu	0	0	1	1	0
+mymail.mines.edu	2	1	1	1	1
+mymail.rcbc.edu	0	1	0	0	0
+mymail.vcu.edu	2	3	1	2	0
+myplace.wcs.edu	0	0	1	1	0
+nau.edu	1	1	0	1	0
+ncsu.edu	3	5	2	5	2
+nd.edu	0	0	0	0	0
+ndm.edu	0	0	0	0	0
+nebo.edu	1	0	0	1	1
+nebrwesleyan.edu	1	0	1	0	1
+net.elmhurst.edu	0	0	0	1	0
+nevada.unr.edu	1	0	0	0	0
+newbury.edu	0	1	0	1	0
+newschool.edu	1	4	1	2	0
+njit.edu	2	7	2	4	2
+nku.edu	1	1	1	1	1
+northsouth.edu	1	0	0	1	0
+nsuok.edu	1	0	1	2	1
+nwmissouri.edu	0	0	0	0	0
+nyit.edu	0	1	0	0	0
+nyu.edu	9	12	6	14	4
+oakland.edu	1	1	0	1	0
+oberln.edu	1	1	0	1	0
+odu.edu	0	1	0	0	0
+ohio.edu	3	0	1	1	2
+ohiodominican.edu	0	0	0	1	0
+okstate.edu	0	1	0	0	0
+ole.augie.edu	1	0	0	0	0
+oregonstate.edu	19	19	14	23	6
+osu.edu	2	5	2	7	0
+oswego.edu	3	2	1	3	0
+otc.edu	1	0	1	1	1
+otterbein.edu	0	0	0	1	0
+ou.edu	1	2	1	3	0
+pace.edu	8	12	6	12	2
+pacific.edu	0	0	0	0	0
+patriots.uttyler.edu	0	0	0	0	0
+pcc.edu	1	1	1	0	0
+pct.edu	0	0	0	1	0
+pepperdine.edu	0	0	1	1	0
+philander.edu	0	1	0	0	0
+phystech.edu	0	1	0	0	0
+pima.edu	1	1	0	1	0
+pio.carrollu.edu	0	0	0	0	0
+pipeline.sbcc.edu	1	1	1	3	1
+pitt.edu	3	1	0	3	0
+plattsburgh.edu	0	0	0	1	0
+plymouth.edu	2	6	2	4	1
+pnw.edu	0	1	1	1	1
+poets.whittier.edu	1	1	0	1	0
+pointloma.edu	0	1	0	1	0
+pointpark.edu	1	1	1	1	0
+polytechnique.edu	0	0	0	0	0
+pop.belmont.edu	0	0	0	1	0
+post.eurasia.edu	1	0	0	1	0
+pratt.edu	1	0	0	1	1
+pride.hofstra.edu	0	1	1	1	1
+princeton.edu	0	1	0	0	1
+pstcc.edu	0	0	0	0	0
+psu.edu	2	2	1	1	2
+pucpr.edu	1	1	0	1	0
+purdue.edu	0	1	0	2	0
+pvamu.edu	0	0	0	1	0
+qc.cuny.edu	1	0	1	0	1
+radford.edu	1	0	1	0	1
+ramapo.edu	0	0	0	1	0
+rams.colostate.edu	1	1	1	1	1
+rams.shepherd.edu	1	1	1	1	1
+reed.edu	0	1	0	0	0
+relay.edu	0	1	0	0	0
+rice.edu	0	1	1	1	1
+rit.edu	0	1	1	1	1
+rockets.utoledo.edu	0	1	0	0	0
+rose-hulman.edu	0	0	0	1	0
+roxbury.edu	1	0	0	1	0
+rrcc.edu	1	1	1	0	0
+rutgers.edu	0	1	1	1	0
+s.ccsd.edu	0	1	1	1	1
+s.sfusd.edu	2	1	1	2	1
+sabanciuniv.edu	0	1	1	0	0
+saeinstitute.edu	0	1	0	0	0
+said.oxford.edu	0	1	0	1	0
+salleurl.edu	0	1	0	0	0
+sals.edu	1	1	1	1	1
+sas.upenn.edu	1	1	0	1	0
+sbc.edu	1	1	1	0	0
+scarletmail.rutgers.edu	2	2	2	4	1
+scu.edu	0	0	0	0	0
+seas.upenn.edu	0	0	0	1	0
+seattleu.edu	2	3	2	4	2
+selu.edu	1	1	0	1	0
+setonhill.edu	1	0	1	1	1
+shsu.edu	0	1	0	0	0
+simmons.edu	0	1	0	0	0
+siue.edu	0	1	0	0	0
+sjsu.edu	2	1	1	3	1
+skidmore.edu	1	0	0	1	1
+smail.astate.edu	1	1	0	1	0
+smu.edu	0	0	0	1	0
+snc.edu	0	1	0	1	0
+snhu.edu	0	2	1	0	0
+somaiya.edu	1	5	2	4	3
+sonoma.edu	0	1	0	0	0
+sou.edu	1	1	1	1	0
+southwesternacademy.edu	1	1	1	1	0
+springfieldcollege.edu	1	1	1	0	0
+st.gactc.edu	0	0	0	0	0
+standrews.sa.edu	1	1	1	1	0
+stanford.edu	1	2	1	4	0
+stcloudstate.edu	0	1	0	0	0
+stevens.edu	2	3	2	5	0
+stevenscollege.edu	0	0	0	0	0
+stonybrook.edu	1	1	1	1	0
+strathmore.edu	11	16	9	12	6
+stu.aii.edu	0	0	0	0	0
+stu.laroche.edu	0	0	1	1	0
+stu.norwich.edu	0	0	0	1	0
+stu.sctech.edu	1	0	0	2	0
+student.american.edu	0	2	1	1	0
+student.c-tec.edu	0	0	0	0	0
+student.cccd.edu	1	2	0	1	0
+student.cccnj.edu	1	1	0	1	0
+student.clearviewregional.edu	1	2	1	1	1
+student.clearviweregional.edu	1	1	0	1	0
+student.ctuonline.edu	0	0	0	0	0
+student.cuaa.edu	1	0	1	0	1
+student.cvtc.edu	1	4	1	1	0
+student.dodea.edu	3	2	3	5	1
+student.fairfield.edu	0	1	1	2	0
+student.fdu.edu	1	2	0	1	0
+student.foothill.edu	0	0	0	0	0
+student.fsc.edu	1	0	0	1	1
+student.gsu.edu	1	2	1	1	1
+student.hebisd.edu	1	1	0	1	1
+student.ie.edu	2	1	3	3	1
+student.ignatius.edu	0	2	0	0	1
+student.mcneese.edu	0	0	0	0	0
+student.monash.edu	3	2	0	3	1
+student.morainepark.edu	0	1	0	0	0
+student.necc.edu	1	1	0	0	0
+student.necc.mass.edu	0	0	0	1	0
+student.pvamu.edu	1	2	1	1	0
+student.sanjuan.edu	1	5	2	2	3
+student.sbccd.edu	0	0	0	1	0
+student.scad.edu	1	0	1	1	1
+student.scusd.edu	1	1	0	1	0
+student.sjcny.edu	0	0	0	0	0
+student.skc.edu	3	1	1	3	1
+student.smc.edu	0	0	0	0	0
+student.touro.edu	1	0	1	1	1
+student.umuc.edu	0	1	0	1	0
+student.upi.edu	0	1	0	0	0
+student.vvc.edu	1	3	2	2	1
+students.cccti.edu	0	1	1	0	0
+students.ccsnh.edu	0	0	0	1	0
+students.cochise.edu	0	0	0	1	0
+students.domincan.edu	1	1	0	1	0
+students.ecpi.edu	1	1	1	1	0
+students.ecu.edu	2	3	2	3	2
+students.fscj.edu	0	0	0	1	0
+students.highline.edu	0	0	0	1	0
+students.kaskaskia.edu	4	3	2	3	1
+students.kennesaw.edu	0	1	0	0	0
+students.mclennan.edu	0	1	0	0	1
+students.reinhardt.edu	0	1	1	0	0
+students.rowan.edu	3	2	0	2	1
+students.spa.edu	0	0	0	1	0
+students.tntech.edu	0	1	0	0	1
+students.uwf.edu	1	1	2	1	2
+studeny.cuny.edu	1	1	1	1	1
+studnts.osd.wednet.edu	0	0	0	0	0
+su.edu	0	0	0	0	0
+su.suffolk.edu	0	1	0	0	0
+sudent.skc.edu	0	0	0	0	0
+suffolk.edu	0	1	0	0	0
+sva.edu	1	2	1	3	0
+svsu.edu	0	1	0	0	0
+swccd.edu	0	0	0	1	0
+syr.edu	3	2	1	2	1
+tamu.edu	6	3	6	6	6
+tc.columbia.edu	1	1	0	1	0
+tcnj.edu	2	1	0	2	1
+tcu.edu	1	0	0	0	0
+temple.edu	3	2	1	7	1
+terpmail.umd.edu	2	1	1	1	1
+thapar.edu	1	1	0	1	0
+tigermail.qcc.cuny.edu	0	1	0	0	0
+tkc.edu	1	1	1	1	0
+trevecca.edu	0	0	0	0	0
+trinity.edu	0	1	0	0	0
+troy.edu	2	2	2	1	0
+truman.edu	0	0	0	0	0
+ttu.edu	3	0	1	2	2
+tulane.edu	0	2	0	0	0
+twu.edu	0	1	0	0	0
+u.boisestate.edu	0	1	0	1	0
+u.brockport.edu	0	0	0	1	0
+u.northwestern.edu	9	9	7	9	5
+u.nus.edu	1	1	0	0	0
+u.pacific.edu	1	1	1	0	1
+u.rochester.edu	1	2	2	1	2
+uab.edu	0	1	0	0	0
+ualr.edu	0	1	1	1	0
+uark.edu	1	1	0	1	0
+ucdavis.edu	10	9	5	8	4
+ucdenver.edu	0	1	0	0	0
+ucf.edu	0	0	1	1	0
+uchicago.edu	4	6	2	5	0
+uci.edu	3	7	4	4	1
+ucla.edu	1	2	1	1	1
+ucmerced.edu	0	2	0	1	0
+ucmo.edu	1	1	0	1	0
+uconn.edu	3	2	2	6	1
+ucr.edu	0	1	0	0	0
+ucsb.edu	1	2	1	3	0
+ucsc.edu	6	4	4	4	3
+ucsd.edu	63	98	51	94	37
+udayton.edu	1	1	1	2	0
+udel.edu	1	1	0	1	0
+ufl.edu	0	1	1	2	1
+ufm.edu	0	0	0	1	0
+uga.edu	0	0	0	0	0
+uh.edu	2	2	4	3	4
+uic.edu	1	1	1	1	1
+uiowa.edu	2	2	2	2	0
+uis.edu	1	1	0	1	0
+uky.edu	2	2	2	2	1
+umail.iu.edu	1	1	1	0	0
+umail.ucsb.edu	0	1	0	0	0
+umass.edu	5	5	2	4	2
+umassmed.edu	0	0	0	0	0
+umb.edu	1	2	1	0	0
+umbc.edu	1	1	1	2	0
+umd.edu	0	1	0	1	0
+umich.edu	8	11	6	13	5
+umkc.edu	0	0	0	1	0
+umn.edu	4	6	3	3	1
+umwestern.edu	1	1	0	1	0
+uncc.edu	4	4	4	4	1
+unh.edu	1	1	1	1	1
+unh.newhaven.edu	0	0	0	0	0
+uni.edu	1	1	1	0	0
+union.edu	0	0	0	0	0
+unl.edu	0	1	0	0	1
+unlv.nevada.edu	0	0	0	0	0
+unm.edu	0	0	0	1	0
+uno.edu	1	2	1	2	0
+unomaha.edu	1	1	1	1	0
+unt.edu	1	1	1	1	0
+uoc.edu	1	1	0	1	0
+uoregon.edu	3	1	2	2	2
+up.edu	0	1	0	0	0
+upenn.edu	1	0	1	0	1
+upf.edu	0	0	0	0	0
+upmc.edu	1	1	1	1	1
+upr.edu	3	4	4	4	3
+uri.edu	2	1	2	0	1
+urmc.rochester.edu	0	1	1	0	0
+usc.edu	6	7	3	8	0
+usm.edu	0	1	0	0	0
+usna.edu	0	1	1	0	0
+utah.edu	1	1	2	1	0
+utexas.edu	7	4	5	8	2
+utica.edu	0	0	0	1	0
+utk.edu	1	0	1	0	1
+uttyler.edu	0	1	0	0	1
+uw.edu	4	6	3	7	3
+uwa.edu	1	2	1	1	0
+uwb.edu	0	0	0	0	0
+uwgb.edu	1	0	1	1	1
+uwlax.edu	1	1	1	1	0
+uwm.edu	1	0	1	0	1
+uwosh.edu	0	0	0	1	0
+valpo.edu	1	1	1	1	0
+valverde.edu	1	2	0	2	0
+vanderbilt.edu	4	1	1	3	2
+vcu.edu	1	2	0	1	0
+vikings.berry.edu	0	1	0	1	0
+villanova.edu	2	3	2	2	1
+vinu.edu	1	0	1	0	1
+virginia.edu	3	3	1	3	2
+vit.edu	0	0	0	1	0
+vols.utk.edu	1	2	0	2	0
+vt.edu	22	16	14	22	6
+wccnet.edu	1	0	0	1	1
+wellesley.edu	3	3	2	2	0
+wells.edu	0	0	0	0	0
+wesleyan.edu	0	1	0	0	0
+west.cmu.edu	0	0	0	0	0
+western.edu	0	0	1	1	0
+westliberty.edu	0	1	1	1	1
+wfu.edu	1	1	0	1	0
+wgu.edu	1	2	1	1	1
+wheatoncollege.edu	1	1	1	1	0
+whiteriver.wednet.edu	0	1	1	1	1
+whu.edu	1	0	1	0	1
+wileyc.edu	1	1	1	1	0
+winona.edu	0	0	0	0	0
+wis.edu	0	1	1	1	1
+wisc.edu	5	8	5	6	3
+wit.edu	0	1	0	0	0
+wiu.edu	2	1	2	2	0
+wmich.edu	1	0	0	1	1
+wne.edu	1	0	0	0	0
+wpi.edu	0	0	0	2	0
+wsu.edu	0	0	0	0	0
+wustl.edu	1	3	0	1	1
+wwu.edu	2	1	2	0	1
+xavier.edu	0	1	0	0	0
+yale.edu	1	1	0	0	0
+zagmail.gonzaga.edu	1	1	1	0	0
+zanestate.edu	0	0	1	1	0
+zips.uakron.edu	0	1	0	0	0
+  
+  
+  
   F-What courses are the New Yorkers students taking?
+  Ans : we use count row that mathes our condition with started or completed course  and city it New York  then when use JOIN to select data from both tables.
+  A JOIN is a way of selecting data from two or more related tables using the columns that define their relationship as the join condition.
+  It retrieves all rows from both tables, where there are matches on the join columns.
+
+Related Links
 
 SELECT users.email_domain,
   COUNT(
@@ -81,7 +794,37 @@ JOIN progress
   WHERE city = 'New York'
   GROUP BY 1;
   
+  
+  result: 
+  email_domain	c_plus_plus	sql	html	javascript	java
+albany.edu	0	1	0	0	0
+alumni.cmu.edu	0	0	0	1	0
+asu.edu	1	0	0	1	1
+baruchmail.cuny.edu	1	0	2	1	1
+berkeley.edu	1	1	1	1	0
+binghamton.edu	0	1	0	0	0
+bths.edu	0	0	0	1	0
+bxscience.edu	2	3	3	2	0
+columbia.edu	2	0	1	3	2
+cornell.edu	0	0	0	1	0
+dwight.edu	1	2	0	2	0
+g.clemson.edu	0	1	0	0	0
+gradcenter.cuny.edu	0	1	0	0	0
+mail.citytech.cuny.edu	1	1	1	1	1
+myhunter.cuny.edu	1	1	1	1	0
+newschool.edu	1	1	0	2	0
+njit.edu	0	1	1	1	1
+nyu.edu	3	5	2	7	1
+pace.edu	0	1	0	0	0
+princeton.edu	0	0	0	0	0
+studeny.cuny.edu	1	1	1	1	1
+sva.edu	1	2	1	3	0
+tigermail.qcc.cuny.edu	0	1	0	0	0
+vols.utk.edu	0	1	0	0	0
+  
 G-What courses are the Chicago students taking?
+
+Ans: Same logic like question F the only diffrence is we need to change city name to Chicago.
 
 SELECT users.email_domain,
   COUNT(
@@ -109,3 +852,23 @@ JOIN progress
   ON users.user_id = progress.user_id
   WHERE city = 'Chicago'
   GROUP BY 1;
+  
+  results :
+  
+email_domain	c_plus_plus	sql	html	javascript	java
+acu.edu	1	0	0	0	0
+chicagobooth.edu	0	0	1	1	0
+cps.edu	22	27	16	24	12
+hawk.iit.edu	2	3	2	5	1
+iit.edu	0	1	0	0	0
+miamioh.edu	1	0	0	1	0
+msu.edu	0	0	0	1	0
+my.devry.edu	0	0	0	1	0
+u.northwestern.edu	3	2	3	4	1
+uchicago.edu	3	5	2	3	0
+uic.edu	1	0	1	1	1
+umich.edu	1	1	1	1	1
+utexas.edu	0	0	0	1	0
+valpo.edu	1	1	1	1	0
+wisc.edu	1	1	1	1	0
+wiu.edu	1	1	1	1	0
